@@ -456,7 +456,7 @@ export class AnalysisPipeline {
       
       // Определяем важность сущностей
       const entityGaps = missingEntities.slice(0, 10).map(entity => {
-        const importance = entity.docCount >= 3 && entity.avgSalience >= 0.01 ? 'high' :
+        const importance: 'high' | 'medium' | 'low' = entity.docCount >= 3 && entity.avgSalience >= 0.01 ? 'high' :
                           entity.docCount >= 2 && entity.avgSalience >= 0.005 ? 'medium' : 'low';
         
         const recommendation = this.generateEntityRecommendation(entity, importance);

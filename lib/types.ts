@@ -46,6 +46,9 @@ export interface EntityItem {
   sourceUrl: string;
   wikipedia_url?: string;
   mentionTexts?: string[]; // Фрагменты текста, где упоминается сущность
+  metadata?: {
+    originalForms?: string[];
+  };
 }
 
 export interface AggregateEntity {

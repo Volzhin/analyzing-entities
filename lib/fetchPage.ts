@@ -37,7 +37,7 @@ export class PageExtractor {
         if (isJavaScriptHeavy) {
           return {
             url,
-            title: this.extractTitle(html),
+            title: this.extractTitleFromHtml(html),
             text: '',
             wordCount: 0,
             error: 'Сайт использует JavaScript для загрузки контента (SPA)'
@@ -47,7 +47,7 @@ export class PageExtractor {
         if (hasRedirect) {
           return {
             url,
-            title: this.extractTitle(html),
+            title: this.extractTitleFromHtml(html),
             text: '',
             wordCount: 0,
             error: 'Сайт возвращает редирект'
@@ -150,20 +150,6 @@ export class PageExtractor {
         classesToPreserve: [],
         // Дополнительные настройки для лучшего извлечения
         keepClasses: false,
-        removeUnlikelyCandidates: true,
-        weightClasses: true,
-        cleanConditionally: true,
-        // Игнорируем элементы с этими классами/ID
-        ignoreClasses: [
-          'ad', 'ads', 'advertisement', 'banner', 'sidebar', 'menu', 
-          'navigation', 'social', 'share', 'comments', 'related',
-          'widget', 'popup', 'modal', 'overlay', 'cookie'
-        ],
-        ignoreIds: [
-          'ad', 'ads', 'advertisement', 'banner', 'sidebar', 'menu',
-          'navigation', 'social', 'share', 'comments', 'related',
-          'widget', 'popup', 'modal', 'overlay', 'cookie'
-        ]
       });
 
       const article = reader.parse();
@@ -274,6 +260,28 @@ export class PageExtractor {
         if (title.length > 5 && title.length < 200) {
           return title;
         }
+      }
+    }
+
+    return 'Без заголовка';
+  }
+
+  private extractTitleFromHtml(html: string): string {
+    // Простое извлечение заголовка из HTML без парсинга DOM
+    const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    if (titleMatch && titleMatch[1]) {
+      const title = titleMatch[1].trim();
+      if (title.length > 5 && title.length < 200) {
+        return title;
+      }
+    }
+
+    // Пробуем найти h1
+    const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+    if (h1Match && h1Match[1]) {
+      const title = h1Match[1].trim();
+      if (title.length > 5 && title.length < 200) {
+        return title;
       }
     }
 

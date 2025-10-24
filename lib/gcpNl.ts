@@ -88,8 +88,7 @@ export class GCPNaturalLanguageClient {
 
       console.log(`Google NLP API ответ для ${sourceUrl}:`, {
         entitiesCount: result.entities?.length || 0,
-        languageCode: result.languageCode,
-        languageSupported: result.languageSupported,
+        languageCode: result.language,
         fullResult: JSON.stringify(result, null, 2)
       });
 
@@ -114,7 +113,7 @@ export class GCPNaturalLanguageClient {
           const normalizedName = this.normalizeEntityName(entity.name!);
           return {
             name: normalizedName,
-            type: this.normalizeEntityType(entity.type || 'UNKNOWN', entity.name),
+            type: this.normalizeEntityType(entity.type || 'UNKNOWN', entity.name || ''),
             salience: entity.salience || 0,
             mentions: entity.mentions?.length || 1,
             url: entity.metadata?.wikipedia_url || undefined,
@@ -262,6 +261,11 @@ export class GCPNaturalLanguageClient {
       'CONSUMER_GOOD': 'Товар',
       'EVENT': 'Событие',
       'WORK_OF_ART': 'Произведение искусства',
+      'PHONE_NUMBER': 'Номер телефона',
+      'ADDRESS': 'Адрес',
+      'DATE': 'Дата',
+      'NUMBER': 'Число',
+      'PRICE': 'Цена',
       'OTHER': 'Другое',
       'UNKNOWN': 'Неизвестно',
     };

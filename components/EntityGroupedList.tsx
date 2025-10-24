@@ -83,12 +83,8 @@ export function EntityGroupedList({
           existing.mentionTexts.push(...entity.mentionTexts);
         }
         // Сохраняем оригинальные формы
-        if (!existing.metadata) {
-          existing.metadata = { originalForms: [existing.name] };
-        }
-        if (!existing.metadata.originalForms) {
-          existing.metadata.originalForms = [existing.name];
-        }
+        existing.metadata ??= { originalForms: [existing.name] };
+        existing.metadata.originalForms ??= [existing.name];
         if (!existing.metadata.originalForms.includes(entity.name)) {
           existing.metadata.originalForms.push(entity.name);
         }
