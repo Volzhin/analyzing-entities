@@ -92,7 +92,7 @@ export class OpenRouterClient {
   }
 
   private getSystemPrompt(hasUserPageComparison: boolean): string {
-    const basePrompt = `Ты — SEO-аналитик уровня Senior с 10+ летним опытом. Проанализируй данные Google Natural Language API и создай ДЕТАЛЬНЫЙ отчёт.
+    let prompt = `Ты — SEO-аналитик уровня Senior с 10+ летним опытом. Проанализируй данные Google Natural Language API и создай ДЕТАЛЬНЫЙ отчёт.
 
 ## СТРУКТУРА ОТЧЁТА:
 
@@ -162,7 +162,7 @@ export class OpenRouterClient {
 
     // Добавляем раздел 4 только если есть сравнение пользовательской страницы
     if (hasUserPageComparison) {
-      basePrompt += `
+      prompt += `
 
 ### 4. Пробелы и возможности (анализ пользовательской страницы)
 
@@ -199,7 +199,7 @@ export class OpenRouterClient {
 ---`;
     }
 
-    basePrompt += `
+    prompt += `
 
 ## ПРАВИЛА НАПИСАНИЯ:
 
@@ -215,7 +215,7 @@ export class OpenRouterClient {
 
 Пиши профессионально, структурированно и по делу.`;
 
-    return basePrompt;
+    return prompt;
   }
 
   private buildUserContent(
