@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PipelineResult } from '@/lib/types';
 import { z } from 'zod';
 
+// Отключаем статическую генерацию для этого роута
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const exportSchema = z.object({
   data: z.any(), // PipelineResult
   format: z.enum(['json', 'csv']),

@@ -3,6 +3,10 @@ import { analysisPipeline } from '@/lib/pipeline';
 import { SearchParams } from '@/lib/types';
 import { z } from 'zod';
 
+// Отключаем статическую генерацию для этого роута
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const analyzeSchema = z.object({
   query: z.string().min(1).max(200),
   country: z.string().optional(),
