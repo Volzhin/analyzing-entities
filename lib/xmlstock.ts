@@ -121,7 +121,8 @@ export class XmlStockClient {
   private cleanText(text: string): string {
     return text
       .replace(/\s+/g, ' ')
-      .replace(/[^\w\s\-.,!?()]/g, '')
+      // Сохраняем латиницу, кириллицу, цифры, пробелы и базовую пунктуацию
+      .replace(/[^a-zA-Zа-яА-ЯёЁ0-9\s\-.,!?():«»""']/g, '')
       .trim();
   }
 
