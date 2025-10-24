@@ -271,4 +271,14 @@ export class XmlStockClient {
   }
 }
 
-export const xmlStockClient = new XmlStockClient();
+// Ленивая инициализация клиента - создается только при первом использовании
+let clientInstance: XmlStockClient | null = null;
+
+export const xmlStockClient = {
+  searchTop10: async (params: SearchParams): Promise<XmlStockResult[]> => {
+    if (!clientInstance) {
+      clientInstance = new XmlStockClient();
+    }
+    return clientInstance.searchTop10(params);
+  }
+};
